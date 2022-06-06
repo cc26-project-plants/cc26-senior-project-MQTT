@@ -1,0 +1,19 @@
+{
+  "name": "mqtt",
+  "version": "1.0.0",
+  "description": "MQTT",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "build": "npm install",
+    "deploy": "gcloud config set project happa-26-mqtt && gcloud app deploy"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "aedes": "^0.47.0",
+    "mqtt": "^4.3.7"
+  }
+}
