@@ -23,7 +23,6 @@ aedesSrv.on("connectionError", (client, error) => {
   console.error(error);
 });
 
-//for publish
 aedesSrv.on("publish", (packet, client) => {
   console.log(
     "Client " +
@@ -37,7 +36,6 @@ aedesSrv.on("publish", (packet, client) => {
   );
 });
 
-//for subscribe
 aedesSrv.on("subscribe", (subscriptions, client) => {
   console.log(
     "MQTT client " +
@@ -49,7 +47,6 @@ aedesSrv.on("subscribe", (subscriptions, client) => {
   );
 });
 
-//for unsubscribing
 aedesSrv.on("unsubscribe", (subscriptions, client) => {
   console.log(
     "MQTT client " +
@@ -61,16 +58,13 @@ aedesSrv.on("unsubscribe", (subscriptions, client) => {
   );
 });
 
-//registering new clients
 aedesSrv.on("client", (client) => {
-  //   console.log("client", client.id);
   console.log(
     "Client Connected:" + (client ? client.id : client) + "to broker",
     aedesSrv.id
   );
 });
 
-//disconnection of a client
 aedesSrv.on("clientDisconnect", (client) => {
   console.log(
     "Client Disconnected:" + (client ? client.id : client) + "to broker",
@@ -78,7 +72,6 @@ aedesSrv.on("clientDisconnect", (client) => {
   );
 });
 
-//starting a MQTT broker
 httpServer.listen(port, () => {
   console.log(
     `MQTT Broker Aedes over websocket started and is listening on port ${port} ....`

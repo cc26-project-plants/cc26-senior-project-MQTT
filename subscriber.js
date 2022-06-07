@@ -1,4 +1,4 @@
-import mqtt from "mqtt";
+import * as mqtt from "mqtt";
 const client = mqtt.connect("ws://localhost:8888");
 const topic = "mqtt/test";
 
