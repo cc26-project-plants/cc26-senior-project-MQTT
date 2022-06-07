@@ -37,11 +37,10 @@ mqtt.on("publish", (packet, client) => {
 
 //for subscribe
 mqtt.on("subscribe", (subscriptions, client) => {
-  //   console.log("subscribe", client.id);
   console.log(
-    "MQTT client \x1b[32m" +
+    "MQTT client " +
       (client ? client.id : client) +
-      "\x1b[0m subscribed to topics: " +
+      " subscribed to topics: " +
       subscriptions.map((s) => s.topic).join("\n"),
     "from broker",
     mqtt.id
