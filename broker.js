@@ -1,8 +1,8 @@
 import aedes from "aedes";
 import { createServer } from "aedes-server-factory";
 const port = 8888;
-const mqtt = aedes();
-const httpServer = createServer(mqtt, { ws: true });
+const aedesSrv = aedes();
+const httpServer = createServer(aedesSrv, { ws: true });
 
 // config for TCP MQTT broker
 // import net from "net";
@@ -13,66 +13,68 @@ const httpServer = createServer(mqtt, { ws: true });
 // comment out line 3,5
 // change httpServer.listen -> server.listen on line 81
 
-mqtt.on("clientError", (client, error) => {
+aedesSrv.on("clientError", (client, error) => {
   console.error(`MQTT client error `, client.id);
   console.error(error);
 });
 
-mqtt.on("connectionError", (client, error) => {
+aedesSrv.on("connectionError", (client, error) => {
   console.error("connection error", client.id);
   console.error(error);
 });
 
 //for publish
-mqtt.on("publish", (packet, client) => {
+aedesSrv.on("publish", (packet, client) => {
   console.log(
-    "Client " + (client ? client.id : "BROKER_" + mqtt.id) + " has published",
+    "Client " +
+      (client ? client.id : "BROKER_" + aedesSrv.id) +
+      " has published",
     packet.payload.toString(),
     "on",
     packet.topic,
     "to broker",
-    mqtt.id
+    aedesSrv.id
   );
 });
 
 //for subscribe
-mqtt.on("subscribe", (subscriptions, client) => {
+aedesSrv.on("subscribe", (subscriptions, client) => {
   console.log(
     "MQTT client " +
       (client ? client.id : client) +
       " subscribed to topics: " +
       subscriptions.map((s) => s.topic).join("\n"),
     "from broker",
-    mqtt.id
+    aedesSrv.id
   );
 });
 
 //for unsubscribing
-mqtt.on("unsubscribe", (subscriptions, client) => {
+aedesSrv.on("unsubscribe", (subscriptions, client) => {
   console.log(
     "MQTT client " +
       (client ? client.id : client) +
       "unsubscribed to topics: " +
       subscriptions.join("\n"),
     "from broker",
-    mqtt.id
+    aedesSrv.id
   );
 });
 
 //registering new clients
-mqtt.on("client", (client) => {
+aedesSrv.on("client", (client) => {
   //   console.log("client", client.id);
   console.log(
     "Client Connected:" + (client ? client.id : client) + "to broker",
-    mqtt.id
+    aedesSrv.id
   );
 });
 
 //disconnection of a client
-mqtt.on("clientDisconnect", (client) => {
+aedesSrv.on("clientDisconnect", (client) => {
   console.log(
     "Client Disconnected:" + (client ? client.id : client) + "to broker",
-    mqtt.id
+    aedesSrv.id
   );
 });
 
