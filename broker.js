@@ -1,9 +1,17 @@
 import aedes from "aedes";
-import net from "net";
-
-const server = net.createServer(aedes.handle);
+import { createServer } from "aedes-server-factory";
+const port = 8888;
 const mqtt = aedes();
-const Port = 1883;
+const httpServer = createServer(mqtt, { ws: true });
+
+// config for TCP MQTT broker
+// import net from "net";
+// const port = 1883;
+// const server = net.createServer(aedes.handle);
+// const mqtt = aedes();
+// changes:
+// comment out line 3,5
+// change httpServer.listen -> server.listen on line 81
 
 mqtt.on("clientError", (client, error) => {
   console.error(`MQTT client error `, client.id);
@@ -70,8 +78,8 @@ mqtt.on("clientDisconnect", (client) => {
 });
 
 //starting a MQTT broker
-server.listen(Port, () => {
+httpServer.listen(port, () => {
   console.log(
-    `MQTT Broker Aedes started and is listening on port ${Port} ....`
+    `MQTT Broker Aedes over websocket started and is listening on port ${port} ....`
   );
 });
