@@ -1,11 +1,30 @@
 import aedes from "aedes";
-import { createServer } from "aedes-server-factory";
-const port = 8888;
 const aedesSrv = aedes();
-const httpServer = createServer(aedesSrv, { ws: true });
+import { createServer } from "aedes-server-factory";
 
+// 'aedes-server-factory' tcp mqtt
 const port1 = 1883;
 const server = createServer(aedesSrv);
+
+//'aedes-server-factory' ws
+// const port = 8888;
+// const httpServer = createServer(aedesSrv, { ws: true });
+
+// WSS
+import https from "https";
+
+const options = {
+  key: process.env.PRODUCTION_KEY,
+  cert: process.env.PRODUCTION_CERT,
+};
+
+const httpsServer = https.createServer(options, (req, res) => {
+  res.writeHead(200);
+  res.end("hello Happa\n");
+});
+import websocketStream from "websocket-stream";
+const port2 = 8808;
+websocketStream.createServer({ server: httpsServer }, aedesSrv.handle);
 
 aedesSrv.on("clientError", (client, error) => {
   console.error(`MQTT client error `, client.id);
@@ -66,14 +85,20 @@ aedesSrv.on("clientDisconnect", (client) => {
   );
 });
 
-httpServer.listen(port, () => {
-  console.log(
-    `MQTT Broker Aedes over websocket started and is listening on port ${port} ....`
-  );
-});
+// httpServer.listen(port, () => {
+//   console.log(
+//     `MQTT Broker Aedes over websocket started and is listening on port ${port} ....`
+//   );
+// });
 
 server.listen(port1, () => {
   console.log(
     `MQTT Broker Aedes TCP started and is listening on port ${port1} ....`
+  );
+});
+
+httpsServer.listen(port2, () => {
+  console.log(
+    `MQTT Broker Aedes over websocket secured started and is listening on port ${port2} ....`
   );
 });
