@@ -2,11 +2,11 @@
   "name": "mqtt",
   "version": "1.0.0",
   "description": "MQTT",
-  "main": "index.js",
+  "main": "broker.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "server": "nodemon index.js",
+    "start": "node broker.js",
+    "server": "nodemon broker.js",
     "build": "npm install",
     "deploy": "gcloud config set project happa-26-mqtt && gcloud app deploy"
   },
@@ -15,12 +15,9 @@
   "dependencies": {
     "aedes": "^0.47.0",
     "aedes-server-factory": "^0.2.1",
-    "fs": "^0.0.1-security",
-    "http": "^0.0.1-security",
     "https": "^1.0.0",
     "mqtt": "^4.3.7",
     "net": "^1.0.2",
-    "web-stream": "^0.0.2",
     "websocket-stream": "^5.5.2"
   }
 }
