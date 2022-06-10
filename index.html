@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>MQTT.js Test</title>
+    <title>MQTT.js</title>
     <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
   </head>
   <body>
-    <p>MQTT.js Test</p>
+    <p>MQTT.js</p>
 
     <input type="button" value="Publish" onclick="OnButtonClick()" />
 
     <script>
-      var client = mqtt.connect("ws://localhost:8888");
+      var client = mqtt.connect("ws://localhost:8808");
 
       client.on("connect", () => {
         console.log("connected");
-        client.subscribe("test");
+        client.subscribe("mqtt/message");
       });
 
       client.on("message", (topic, message) => {
@@ -23,7 +23,7 @@
 
       function OnButtonClick() {
         console.log("onClick");
-        client.publish("mqtt/test", "hello world!");
+        client.publish("mqtt/message", "message from mqtt server");
       }
     </script>
   </body>

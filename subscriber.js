@@ -1,5 +1,5 @@
 import * as mqtt from "mqtt";
-const client = mqtt.connect("ws://localhost:8888");
+const client = mqtt.connect("ws://localhost:8808");
 const topic = "mqtt/test";
 
 client.on("connect", function () {
